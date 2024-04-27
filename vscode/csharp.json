@@ -1,0 +1,156 @@
+{
+	"prismDelegateCommand": {
+        "prefix": "cmd",
+        "body": [
+            "#region $name$Command",
+            "private DelegateCommand _$name1$Command;",
+            "public DelegateCommand $name$Command => _$name1$Command ??= new DelegateCommand(async () => {",
+            "    if(IsBusy) return;",
+            "    IsBusy = true;",
+            "    IsBusy = false;",
+            "});",
+            "#endregion"
+        ],
+        "description": "Create a prism delegate command"
+    },
+    "prismDelegateCommandWithCanExecute": {
+        "prefix": "cmdcan",
+        "body": [
+            "#region $name$Command",
+            "private DelegateCommand _$name1$Command;",
+            "public DelegateCommand $name$Command => _$name1$Command ??= new DelegateCommand(",
+            "    executeMethod: async () =>",
+            "    {",
+            "        if (IsBusy) return;",
+            "        IsBusy = true;",
+            "        IsBusy = false;",
+            "    },",
+            "    canExecuteMethod: () =>",
+            "    {",
+            "        return !IsBusy;",
+            "    })",
+            "    .ObservesProperty(() => IsBusy);",
+            "#endregion"
+        ],
+        "description": "Create a prism delegate command with CanExecute"
+	},
+	"genericDelegateCommandWithCanExecute": {
+        "prefix": "cmdcant",
+        "body": [
+            "#region $name$Command",
+            "private DelegateCommand<$type$> _$name1$Command;",
+            "public DelegateCommand<$type$> $name$Command => _$name1$Command ??= new DelegateCommand<$type$>(",
+            "    executeMethod: async arg =>",
+            "    {",
+            "        if (IsBusy) return;",
+            "        IsBusy = true;",
+            "        IsBusy = false;",
+            "    },",
+            "    canExecuteMethod: arg =>",
+            "    {",
+            "        return !IsBusy;",
+            "    })",
+            "    .ObservesProperty(() => IsBusy);",
+            "#endregion"
+        ],
+        "description": "Create a generic delegate command with CanExecute"
+    },
+	"genericPrismDelegateCommand": {
+        "prefix": "cmdt",
+        "body": [
+            "#region $name$Command",
+            "private DelegateCommand<$type$> _$name1$Command;",
+            "public DelegateCommand<$type$> $name$Command => _$name1$Command ??= new DelegateCommand<$type$>(async arg => {",
+            "    if(IsBusy) return;",
+            "    IsBusy = true;",
+            "    IsBusy = false;",
+            "});",
+            "#endregion"
+        ],
+        "description": "Create a generic prism delegate command"
+    },
+	"coolComment": {
+		"prefix": "cmt",
+		"body": [
+			"/* ==================================================================================================",
+			" * $end$",
+			" * ================================================================================================*/"
+		],
+		"description": "Create a cool comment"
+	},
+	"attachedProperty": {
+        "prefix": "propa",
+        "body": [
+            "#region $value$",
+            "public static readonly BindableProperty $value$Property = BindableProperty.CreateAttached(\"$value$\", typeof($type$), typeof($classname$), default($type$));",
+            "public static $type$ Get$value$(BindableObject bindable)",
+            "    => ($type$)bindable.GetValue($value$Property);",
+            "public static void Set$value$(BindableObject bindable, $type$ value)",
+            "    => bindable.SetValue($value$Property, value);",
+            "#endregion"
+        ],
+        "description": "Create an attached property"
+    },
+	"bindableProperty": {
+        "prefix": "propb",
+        "body": [
+            "#region $name$",
+            "public static BindableProperty $name$Property = BindableProperty.Create(nameof($name$), typeof($type$), typeof($classname$), default($type$), $mode$);",
+            "public $type$ $name$",
+            "{",
+            "  get { return ($type$) GetValue($name$Property); }",
+            "  set { SetValue($name$Property, value); }",
+            "}",
+            "#endregion"
+        ],
+        "description": "Create a bindable property"
+    },
+	"bindablePropertyWithPropertyChanged": {
+        "prefix": "propbchanged",
+        "body": [
+            "#region $name$",
+            "public static BindableProperty $name$Property = BindableProperty.Create(nameof($name$), typeof($type$), typeof($classname$), default($type$), $mode$, propertyChanged: $name$Changed);",
+            "private static void $name$Changed(BindableObject bindable, object oldValueObject, object newValueObject)",
+            "{",
+            "    var @this = ($classname1$)bindable;",
+            "    var oldValue = ($type$)oldValueObject;",
+            "    var newValue = ($type$)newValueObject;",
+            "}",
+            "public $type$ $name$",
+            "{",
+            "  get { return ($type$)GetValue($name$Property); }",
+            "  set { SetValue($name$Property, value); }",
+            "}",
+            "#endregion"
+        ],
+        "description": "Create a bindable property with property changed"
+    },
+	"propertyWithJsonProperty": {
+        "prefix": "propj",
+        "body": [
+            "[JsonProperty(\"$property$\")]",
+            "public $type$ $Property$ { get; set; }"
+        ],
+        "description": "Property with JsonProperty attribute"
+    },
+	"propertyWithPrismSetProperty": {
+        "prefix": "props",
+        "body": [
+            "private $type$ _$field$;",
+            "public $type$ $property$",
+            "{",
+            "    get { return _$field$; }",
+            "    set { SetProperty(ref _$field$, value); }",
+            "}"
+        ],
+        "description": "Property with Prism SetProperty"
+    },
+    "validatableObjectProperty": {
+        "prefix": "propv",
+        "body": [
+            "public ValidatableObject<$valuetype$> $name$ { get; set; } = new ValidatableObject<$valuetype$>(false);"
+        ],
+        "description": "Create a validatable object property"
+	}
+}
+  
